@@ -326,6 +326,7 @@ class EditProfileSheet extends StatefulWidget {
 class _EditProfileSheetState extends State<EditProfileSheet> {
   late TextEditingController _nicknameController;
   late TextEditingController _avatarController;
+  late TextEditingController _bioController;
   final _picker = ImagePicker();
   String _avatarUrl = '';
   bool _isSavingAvatar = false;
@@ -335,6 +336,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
     super.initState();
     _nicknameController = TextEditingController(text: widget.profile.nickname);
     _avatarController = TextEditingController(text: widget.profile.avatarChar);
+    _bioController = TextEditingController(text: widget.profile.bio);
     _avatarUrl = widget.profile.avatarUrl;
   }
 
@@ -342,6 +344,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
   void dispose() {
     _nicknameController.dispose();
     _avatarController.dispose();
+    _bioController.dispose();
     super.dispose();
   }
 
@@ -378,6 +381,7 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
         nickname: nickname,
         avatarChar: avatarChar.substring(0, 1),
         avatarUrl: _avatarUrl,
+        bio: _bioController.text.trim(),
       ),
     );
   }
@@ -461,6 +465,17 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
             decoration: const InputDecoration(
               labelText: '昵称',
               labelStyle: TextStyle(color: AppColors.mocha500),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _bioController,
+            maxLength: 40,
+            maxLines: 2,
+            decoration: const InputDecoration(
+              labelText: '个性签名',
+              labelStyle: TextStyle(color: AppColors.mocha500),
+              hintText: '写一句关于自己的话',
             ),
           ),
           const SizedBox(height: 12),

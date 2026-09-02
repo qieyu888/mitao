@@ -30,7 +30,7 @@ class StorageService {
   static const _keyFollowerIds = 'follower_user_ids';
   static const _keyHiddenPostIds = 'hidden_post_ids';
   static const _keyDataVersion = 'data_version';
-  static const _currentDataVersion = 8;
+  static const _currentDataVersion = 9;
 
   SharedPreferences? _prefs;
 
@@ -54,6 +54,42 @@ class StorageService {
   Future<void> _migrateIfNeeded(SharedPreferences prefs) async {
     final version = prefs.getInt(_keyDataVersion) ?? 1;
     if (version >= _currentDataVersion) return;
+
+    if (version < 9) {
+      final existingFeed = (jsonDecode(prefs.getString(_keyFeedPosts) ?? '[]')
+              as List<dynamic>)
+          .map((e) => Post.fromJson(e as Map<String, dynamic>))
+          .toList();
+      final existingById = {for (final p in existingFeed) p.id: p};
+      final userPosts =
+          existingFeed.where((p) => p.id.startsWith('post_')).toList();
+      final mockFeed = PostEnricher.enrichAll(MockData.feedPosts);
+      final mergedFeed = <Post>[
+        ...userPosts,
+        for (final mock in mockFeed) _mergeFeedPost(existingById[mock.id], mock),
+      ];
+      await saveFeedPosts(mergedFeed);
+
+      final existingDiary =
+          (jsonDecode(prefs.getString(_keyDiaryPosts) ?? '[]') as List<dynamic>)
+              .map((e) => Post.fromJson(e as Map<String, dynamic>))
+              .toList();
+      final diaryById = {for (final p in existingDiary) p.id: p};
+      final userDiary =
+          existingDiary.where((p) => p.id.startsWith('post_')).toList();
+      final mockDiary = PostEnricher.enrichAll(MockData.diaryPosts);
+      final mergedDiary = <Post>[
+        ...userDiary,
+        for (final mock in mockDiary) diaryById[mock.id] ?? mock,
+      ];
+      await saveDiaryPosts(mergedDiary);
+
+      final profile = await loadProfile();
+      if (profile.bio.trim().isEmpty) {
+        profile.bio = '把日常过成喜欢的样子';
+        await saveProfile(profile);
+      }
+    }
 
     if (version < 8) {
       final existingFeed = (jsonDecode(prefs.getString(_keyFeedPosts) ?? '[]')

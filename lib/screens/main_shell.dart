@@ -602,6 +602,7 @@ class _MainShellState extends State<MainShell> {
         return ProfileScreen(
           profile: _profileWithStats,
           diaryPosts: _diaryPosts,
+          favoriteCount: _favoriteIds.length,
           onEditProfile: _editProfile,
           onCreatePost: _openCreatePost,
           onOpenSettings: _openSettings,

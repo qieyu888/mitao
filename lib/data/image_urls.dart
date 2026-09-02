@@ -35,6 +35,9 @@ class ImageUrls {
   static final flowers = _kw('flower,bouquet', lock: 14);
   static final pets = _kw('shiba,dog', lock: 22);
   static final nails = _kw('manicure,nails', lock: 21);
+  static final yoga = _u('photo-1544367567-0f2fcb009e0b');
+  static final journal = _kw('journal,planner,stationery', lock: 33);
+  static final fitness = _kw('gym,workout,fitness', lock: 34);
 
   /// 每条动态专属语义关键词（与 feed_mock_data 文案一一对应）
   static const Map<String, String> _feedKeywords = {
@@ -68,6 +71,14 @@ class ImageUrls {
     'feed_28': 'hotpot,chinese,food', // 火锅
     'feed_29': 'snow,winter,landscape', // 初雪
     'feed_30': 'night,city,running', // 夜跑城市
+    'feed_31': 'running,morning,park', // 晨跑
+    'feed_32': 'pilates,yoga,stretch', // 普拉提
+    'feed_33': 'journal,scrapbook,diary', // 手帐排版
+    'feed_34': 'stationery,sticker,planner', // 手帐贴纸
+    'feed_35': 'ancient,town,alley', // 古镇旅行
+    'feed_36': 'skincare,beauty,cosmetic', // 护肤
+    'feed_37': 'dessert,patisserie,sweet', // 甜品店
+    'feed_38': 'corgi,dog,cute', // 柯基
   };
 
   /// 萌友圈每条动态专属配图
@@ -103,11 +114,201 @@ class ImageUrls {
         return trip;
       case '美妆':
         return nails;
+      case '运动':
+        return fitness;
+      case '手帐':
+        return journal;
       case '日常':
         return nature;
       default:
         return nature;
     }
+  }
+
+  /// 发现页按频道 + 序号取稳定关键词图
+  static String discoverImage(String category, int index) {
+    const keywords = <String, List<String>>{
+      '穿搭': [
+        'fashion,outfit',
+        'street,style',
+        'knitwear,sweater',
+        'dress,woman',
+        'coat,autumn',
+        'denim,jacket',
+        'skirt,fashion',
+        'hanfu,chinese',
+        'shoes,sneakers',
+        'bag,fashion',
+        'ootd,mirror',
+        'vintage,clothes',
+        'white,shirt',
+        'boots,fashion',
+        'scarf,winter',
+        'blouse,outfit',
+        'jeans,style',
+        'cardigan,knit',
+        'hat,fashion',
+        'accessories,jewelry',
+      ],
+      '美食': [
+        'dessert,cake',
+        'coffee,latte',
+        'brunch,eggs',
+        'hotpot,chinese',
+        'sushi,food',
+        'noodles,ramen',
+        'pastry,bakery',
+        'fruit,fresh',
+        'tea,afternoon',
+        'pizza,food',
+        'icecream,dessert',
+        'salad,healthy',
+        'dumpling,chinese',
+        'chocolate,sweet',
+        'bread,bakery',
+        'smoothie,drink',
+        'bbq,grill',
+        'macaron,dessert',
+        'soup,food',
+        'seafood,dish',
+      ],
+      '萌宠': [
+        'cat,kitten',
+        'dog,puppy',
+        'shiba,dog',
+        'corgi,dog',
+        'rabbit,pet',
+        'hamster,cute',
+        'cat,sleeping',
+        'dog,park',
+        'kitten,play',
+        'puppy,cute',
+        'cat,window',
+        'dog,walking',
+        'persian,cat',
+        'poodle,dog',
+        'cat,yarn',
+        'dog,beach',
+        'bunny,pet',
+        'cat,sofa',
+        'dog,smile',
+        'kitten,box',
+      ],
+      '日常': [
+        'desk,workspace',
+        'sunset,sky',
+        'plant,indoor',
+        'book,reading',
+        'camera,film',
+        'vinyl,music',
+        'coffee,morning',
+        'window,light',
+        'flowers,vase',
+        'candle,cozy',
+        'notebook,pen',
+        'city,night',
+        'rain,window',
+        'balcony,plant',
+        'room,interior',
+        'tea,cup',
+        'sunset,pink',
+        'home,cozy',
+        'street,morning',
+        'sky,clouds',
+      ],
+      '旅行': [
+        'beach,ocean',
+        'mountain,hiking',
+        'city,travel',
+        'ancient,town',
+        'camping,tent',
+        'lake,nature',
+        'temple,asia',
+        'street,europe',
+        'forest,trail',
+        'island,sea',
+        'train,travel',
+        'hotel,room',
+        'waterfall,nature',
+        'desert,sand',
+        'snow,mountain',
+        'market,street',
+        'bridge,city',
+        'village,countryside',
+        'harbor,boats',
+        'park,garden',
+      ],
+      '美妆': [
+        'manicure,nails',
+        'skincare,beauty',
+        'lipstick,makeup',
+        'perfume,bottle',
+        'makeup,brush',
+        'serum,skincare',
+        'mirror,makeup',
+        'eyeshadow,palette',
+        'cream,skincare',
+        'nail,polish',
+        'lipstick,red',
+        'beauty,products',
+        'facial,mask',
+        'blush,makeup',
+        'toner,skincare',
+        'eyeliner,makeup',
+        'moisturizer,face',
+        'cosmetic,bag',
+        'foundation,makeup',
+        'haircare,beauty',
+      ],
+      '运动': [
+        'gym,workout',
+        'yoga,stretch',
+        'running,park',
+        'pilates,fitness',
+        'cycling,bike',
+        'swimming,pool',
+        'hiking,trail',
+        'dumbbell,gym',
+        'stretching,yoga',
+        'jogging,morning',
+        'fitness,woman',
+        'basketball,sport',
+        'tennis,court',
+        'skateboard,park',
+        'climbing,gym',
+        'dance,studio',
+        'boxing,gloves',
+        'rowing,fitness',
+        'trail,running',
+        'workout,home',
+      ],
+      '手帐': [
+        'journal,planner',
+        'stationery,sticker',
+        'notebook,diary',
+        'scrapbook,craft',
+        'pen,writing',
+        'washi,tape',
+        'planner,desk',
+        'stickers,cute',
+        'bullet,journal',
+        'diary,open',
+        'calligraphy,pen',
+        'notebook,flatlay',
+        'planner,calendar',
+        'scrapbook,page',
+        'ink,pen',
+        'stationery,desk',
+        'journal,writing',
+        'paper,craft',
+        'notebook,coffee',
+        'planner,stickers',
+      ],
+    };
+    final list = keywords[category] ?? ['lifestyle,photo'];
+    final kw = list[index % list.length];
+    final lock = category.hashCode.abs() % 1000 + index * 17;
+    return _kw(kw, lock: lock);
   }
 
   static bool isLegacyImageUrl(String url) =>

@@ -149,7 +149,7 @@ class _ChannelListBodyState extends State<_ChannelListBody> {
               children: [
                 Expanded(
                   child: Text(
-                    '筛选：$_selectedCategory',
+                    '筛选：$_selectedCategory · ${filtered.length} 篇',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppColors.mocha700,

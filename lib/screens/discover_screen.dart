@@ -152,7 +152,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              hasFilter ? '${widget.selectedCategory} · 推荐' : '为你推荐',
+              hasFilter
+                  ? '${widget.selectedCategory} · ${filtered.length} 篇'
+                  : '为你推荐 · ${filtered.length} 篇',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             if (hasFilter)
